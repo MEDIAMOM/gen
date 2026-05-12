@@ -978,7 +978,39 @@ def main_menu():
 if __name__ == "__main__":
     try:
         if install_requirements():
-            main_menu()
+            SUCCESS_COUNTER = 0
+            TARGET_ACCOUNTS = 10
+            RARE_COUNTER = 0
+            COUPLES_COUNTER = 0
+            
+            selected_region = "IND"
+            account_name = "STAR"
+            password_prefix = "STAR"
+            account_count = 10
+            thread_count = 2
+            is_ghost = False
+
+            threads = []
+
+            for i in range(thread_count):
+                t = threading.Thread(
+                    target=worker_thread,
+                    args=(
+                        selected_region,
+                        account_name,
+                        password_prefix,
+                        account_count,
+                        i + 1,
+                        is_ghost
+                    )
+                )
+
+                t.daemon = True
+                t.start()
+                threads.append(t)
+
+            for t in threads:
+                t.join()
     except KeyboardInterrupt:
         safe_exit()
     except Exception as e:
