@@ -1,0 +1,6 @@
+requests
+pycryptodome
+protobuf
+urllib3
+colorama
+psutil
